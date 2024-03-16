@@ -35,7 +35,11 @@ app.post('/autocomplete', (req, res) => {
     // Perform a simple SQL query to fetch suggestions
     const query = `SELECT ModName FROM mods WHERE ModName LIKE '%${inputText}%' LIMIT 6`;
     connection.query(query, (error, results) => {
-        if (error) throw error;
+        if (error) {
+            console.error("Error fetching autocomplete suggestions:", error);
+            res.status(500).json({ error: "Internal server error" });
+            return;
+        }
         
         // Process the result and send suggestions as JSON
         const suggestions = results.map(result => result.ModName);
