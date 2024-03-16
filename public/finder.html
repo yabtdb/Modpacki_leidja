@@ -59,7 +59,7 @@
             // Make an AJAX request to the Node.js server
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:3000/autocomplete',
+                url: '/autocomplete',
                 data: { input: inputText },
                 success: function(response) {
                     // Update the suggestions element with the received data
