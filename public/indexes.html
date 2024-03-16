@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocomplete with Node.js</title>
+    <!-- Include jQuery for easier AJAX handling -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+    <h2>Autocomplete with Node.js</h2>
+
+    <!-- Input Field -->
+    <label for="userInput">Enter text:</label>
+    <input type="text" id="userInput" placeholder="Type something...">
+
+    <!-- Display Autocomplete Suggestions -->
+    <div id="autocompleteSuggestions"></div>
+
+    <!-- JavaScript to handle autocomplete -->
+    <script>
+        // Get the input field and suggestions element
+        const userInput = $('#userInput');
+        const autocompleteSuggestions = $('#autocompleteSuggestions');
+
+        // Add an event listener to update autocomplete suggestions
+        userInput.on('input', function() {
+            // Get the current input value
+            const inputText = userInput.val();
+
+            // Make an AJAX request to the Node.js server
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:3000/autocomplete',
+                data: { input: inputText },
+                success: function(response) {
+                    // Update the suggestions element with the received data
+                    autocompleteSuggestions.html(response.map(suggestion => `<div class="autocomplete-suggestion">${suggestion}</div>`).join(''));
+                    $('.autocomplete-suggestion').on('click', function() {
+                        const selectedSuggestion = $(this).text();
+                        // Navigate to the details page with the selected suggestion
+                        window.location.href = 'details.html?modName=' + encodeURIComponent(selectedSuggestion);
+                    });
+
+
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
+

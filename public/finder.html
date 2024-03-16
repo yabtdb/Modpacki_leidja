@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modpacki leidja</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <header class="header1">
+        <a style= "text-decoration: none" href="index.html">
+        <h1 class="pealkiri">Modpacki leidja</h1>
+        </a>
+        <a style= "text-decoration: none"href="sirvi.html">
+        <button style="margin-right:12px" onclick="">Tutvu</button>
+        </a>
+        <a style= "text-decoration: none"href="kontakt.html">
+        <button style="margin-right:12px" onclick="">Kontakt</button>
+        </a>
+        <a style= "text-decoration: none"href="finder.html">
+        <button style="margin-right:12px" onclick="">Leia Modpack</button>
+        </a>
+    </header>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="p5">
+        <div class="p6">
+            <h2>Sisesta mod</h2>
+        </div>
+            <input type="text" id="userInput" required placeholder="Just Enough Items" style="height:25px; width:350px;">
+            <input type="Submit" id="otsiButton" value="Otsi" style="height:31px; width:40px">
+            <div id="autocompleteSuggestions"></div>
+            <div id="modpackList" class="p7"></div>
+            <div id="paginationButtons" style="display: none;">
+                <button id="prevButton" style="display: none;"><</button>
+                <button id="nextButton" style="display: none;">></button> 
+
+            </div>
+            
+    </div>
+    <script>
+        var modpacksarray = [];
+        var currentPage = 1;
+        var modpacksPerPage = 10;
+        // Get the input field and suggestions element
+        const userInput = $('#userInput');
+        const autocompleteSuggestions = $('#autocompleteSuggestions');
+
+        // Add an event listener to update autocomplete suggestions
+        userInput.on('input', function() {
+            // Get the current input value
+            const inputText = userInput.val();
+
+            // Make an AJAX request to the Node.js server
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:3000/autocomplete',
+                data: { input: inputText },
+                success: function(response) {
+                    // Update the suggestions element with the received data
+                    autocompleteSuggestions.html(response.map(suggestion => `<div class="autocomplete-suggestion">${suggestion}</div>`).join(''));
+                    $('.autocomplete-suggestion').on('click', function() {
+                        const selectedSuggestion = $(this).text();
+                        // Navigate to the details page with the selected suggestion
+                        var selectedMod = $(this).text(); // Get the text of the clicked mod choice
+                        $('#userInput').val(selectedMod);
+                        
+                        /*window.location.href = 'details.html?modName=' + encodeURIComponent(selectedSuggestion);*/
+                    });
+
+
+                }
+            });
+            if (userInput) {
+                $('#autocompleteSuggestions').show();
+            } else {
+                $('#autocompleteSuggestions').empty();
+            }
+        });
+        function displayModpacks() {
+            var startIndex = (currentPage - 1) * modpacksPerPage;
+            var endIndex = startIndex + modpacksPerPage;
+            var displayModpacks = modpacksarray.slice(startIndex, endIndex);
+
+            var modpackList = displayModpacks.map(modpack => `<li>${modpack}</li>`).join('');
+            $('#modpackList').html(modpackList);
+
+            // Show/hide pagination buttons based on whether modpacks are displayed
+            if (modpacksarray.length > modpacksPerPage) {
+                $('#paginationButtons').show();
+                if (currentPage > 1) {
+                    $('#prevButton').show();
+                } else {
+                    $('#prevButton').hide();
+                }
+                if (endIndex < modpacksarray.length) {
+                    $('#nextButton').show();
+                } else {
+                    $('#nextButton').hide();
+                }
+            } else {
+                $('#paginationButtons').hide();
+            }
+        }
+
+        // Event listener for "Next" button
+        $('#nextButton').on('click', function() {
+            currentPage++; // Increment current page
+            displayModpacks(); // Display modpacks for the new page
+        });
+
+        // Event listener for "Previous" button
+        $('#prevButton').on('click', function() {
+            currentPage--; // Decrement current page
+            displayModpacks(); // Display modpacks for the new page
+        });
+        
+        function fetchModpacks(selectedMod) {
+            // Make an AJAX request to fetch modpacks for the selected mod
+            $.ajax({
+                url: '/modpacks',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ selectedMod: selectedMod }),
+                success: function(data) {
+                    // Update the UI to display the modpacks
+                    /*var modpackList = modpacks.map(modpack => `<li>${modpack}</li>`).join('');
+                    $('#modpackList').html(modpackList);*/
+                    modpacksarray = data; // Update modpacks array with fetched data
+                    currentPage = 1; // Reset to first page when new mod is selected
+                    displayModpacks();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching modpacks:', error);
+                }
+            });
+        }
+
+        // Event listener for when a mod is selected
+        $('#otsiButton').on('click', function() {
+            var selectedMod = $('#userInput').val();
+            if (selectedMod) {
+                fetchModpacks(selectedMod);
+                $('#autocompleteSuggestions').hide();
+    } else {
+        $('#modpackList').empty(); // Clear modpack list if no mod is selected
+        $('#paginationButtons').hide(); // Hide pagination buttons
+    }
+});
+    </script>
+
+
+        <footer class="footer2">
+            <h2>Modpacki leidja OÜ</h2>
+            <p>modpacki.leidja@gmail.com</p>
+            <p>Karel ja Brendt</p>
+    
+        </footer>
+</body>
+</html>

@@ -1,0 +1,190 @@
+body{
+    height:100%;
+    padding:0px;
+    background-image: url("background2.jpg");
+    background-color: #cccc;
+}
+#p1{
+    color: #e9e6ff;
+}
+#p2{
+    color: #e9e6ff;
+    text-align:center;
+    margin-left: 250px;
+    margin-right: 250px;
+    color: white;
+
+}
+.p3{
+    text-align: center;
+    color: #e9e6ff;
+    margin-right: 1150px;
+}
+.header1 {
+    margin: 0;
+    padding:5px;
+    background-color: #101010;
+    color: white;
+}
+.footer1{
+    padding-top: 1px;
+    padding-bottom: 31px;
+    text-align: center;
+    color: white;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #101010;
+
+}
+.footer2{
+    padding-top: 1px;
+    padding-bottom: 31px;
+    text-align: center;
+    color: white;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #101010;
+
+}
+p{
+    font-family: "Lato";
+    font-size: 15px;
+    margin-bottom: 0;
+}
+h1{
+    font-family: "Lato";
+    font-size: 20px;
+    margin-top: 0;
+}
+html, body{
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: "Lato";
+}
+.p1 {
+    color:#e9e6ff;
+    font-family: "Lato";
+    font-size: 18px;
+    text-align:center;
+    margin-left: 250px;
+    margin-right: 250px;
+}
+button{
+    background-color:#14CC60;
+    color:black;
+    border: .5px solid black;
+    font-size: 20px;
+    border-radius: 100px;
+    transition: .6s;
+    overflow: hidden;
+    transform: scale(1);
+}
+.pealkiri{
+    color: white;
+}
+.pildid {
+    text-align: center;
+    color: white;
+}
+
+.container {
+    text-align: center;
+    display: flex;
+    justify-content: center; /* Horisontaalselt keskendab kogu sisu */
+    align-items: center;
+    height: 100vh; /* Võib lisada, et tagada täisekraanil keskendumine */
+}
+
+.image-container {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Võimaldab piltidel minna uuele reale, kui ruumi pole */
+    justify-content: center; /* Horisontaalselt keskendab pildid */
+    align-items: center;
+}
+
+.image-container img {
+    width: 200px;
+    height: auto;
+    margin: 5px;
+}
+
+.text-container {
+    font-family: Arial, sans-serif;
+    width: 200px;
+    text-align: center;
+    margin-top: 10px;
+    color: white;
+    display: flex;
+    padding: 5px;
+    font-family: "Lato";
+}
+
+.image-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+.p4{
+    margin-left: 250px;
+    margin-right: 250px;
+    color: white;
+    font-family: "Lato";
+}
+.p5{
+    
+    text-align: center;
+    color: white;
+    height: 80px;
+}
+.p6{
+    margin-right: 385px;
+}
+.input-container { 
+    text-align: right; 
+  }
+
+#autocompleteSuggestions {
+    margin-top: 0;
+    text-align:left;
+   
+    margin: auto;
+    border-radius: 2px;
+    position: relative;
+    background-color: white;  /*Set background color */
+    max-height: 200px;  /*Set maximum height to enable scrolling */
+    overflow-y: auto;  /*Enable vertical scrolling */
+      /*Add padding */
+    max-width: 356px;
+    right:22px;
+    top:1px;
+    
+    color:#101010;
+    
+}
+
+
+.autocompleteOption {
+    padding: 8px 0; /* Add padding */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.autocompleteOption:hover {
+    background-color: #f9f9f9; /* Change background color on hover */
+}
+.p7{
+    text-align: center;
+    color: aliceblue;
+    font-family: "Lato";
+    font-size: 20px;
+    
+}
